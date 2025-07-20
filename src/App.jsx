@@ -8,35 +8,35 @@ import PublicRoute from './components/PublicRoute'
 import AdminLayout from './components/AdminLayout'
 
 function App() {
-  return (
-    <Router>
-      <Routes>
-        {/* Public route: login */}
-        <Route
-          path="/login"
-          element={
-            <PublicRoute>
-              <Login />
-            </PublicRoute>
-          }
-        />
+    return (
+        <Router>
+            <Routes>
+                {/* Public route: login */}
+                <Route
+                    path="/login"
+                    element={
+                        <PublicRoute>
+                            <Login />
+                        </PublicRoute>
+                    }
+                />
 
-        {/* Protected layout with nested routes */}
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute>
-              <AdminLayout />
-            </ProtectedRoute>
-          }
-        >
-          <Route index element={<Dashboard />} />
-          <Route path="users" element={<Users />} />
-          <Route path="settings" element={<Settings />} />
-        </Route>
-      </Routes>
-    </Router>
-  )
+                {/* Protected layout with nested routes */}
+                <Route
+                    path="/"
+                    element={
+                        <ProtectedRoute>
+                            <AdminLayout />
+                        </ProtectedRoute>
+                    }
+                >
+                    <Route index element={<Dashboard />} />
+                    <Route path="users" element={<Users />} />
+                    <Route path="settings" element={<Settings />} />
+                </Route>
+            </Routes>
+        </Router>
+    )
 }
 
 export default App
