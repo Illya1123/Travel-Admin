@@ -51,7 +51,7 @@ const Login = () => {
         <section className="login relative h-screen w-full">
             <div className="overlay absolute left-0 top-0 z-10 h-full w-full bg-black/50"></div>
             <video
-                src="https://res.cloudinary.com/dnroxsd4n/video/upload/f_auto,q_auto,vc_auto/v1752994359/LoginPage_Ha_Long_Bay_3840x2160_shon1i.mp4"
+                src="https://res.cloudinary.com/dnroxsd4n/video/upload/f_auto,q_auto,vc_auto/v1753032082/admin_login_zn6wl0.mp4"
                 type="video/mp4"
                 loop
                 autoPlay
