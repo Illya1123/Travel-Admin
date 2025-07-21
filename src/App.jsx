@@ -9,6 +9,7 @@ import Settings from './pages/Settings'
 import ProtectedRoute from './components/ProtectedRoute'
 import PublicRoute from './components/PublicRoute'
 import AdminLayout from './components/AdminLayout'
+import NotFoundPage from './pages/NotFoundPage'
 
 function App() {
     return (
@@ -40,6 +41,7 @@ function App() {
                     <Route path="Tours" element={<Tours />} />
                     <Route path="/tours-booked" element={<BookedManager />} />
                 </Route>
+                <Route path="*" element={<NotFoundPage />} />
             </Routes>
         </Router>
     )
