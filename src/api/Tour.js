@@ -12,8 +12,9 @@ export const getAllTours = async () => {
     }
 }
 
-export const createTour = async (data, token) => {
+export const createTour = async (data) => {
     try {
+        const token = localStorage.getItem('accessToken')
         const response = await axios.post(`${baseUrl}/api/tour/createTours`, data, {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -40,7 +41,6 @@ export const updateTourById = async (id, data) => {
         throw error
     }
 }
-
 
 export const deleteTourById = async (id) => {
     try {

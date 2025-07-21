@@ -1,5 +1,6 @@
 import { FaHome, FaUsers, FaCog, FaSignOutAlt, FaTicketAlt } from 'react-icons/fa'
-import { MdModeOfTravel } from "react-icons/md";
+import { BsCartCheckFill } from 'react-icons/bs'
+import { MdModeOfTravel } from 'react-icons/md'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { logout } from '../store/slices/authSlice'
@@ -7,7 +8,8 @@ import { logout } from '../store/slices/authSlice'
 const tabs = [
     { label: 'Dashboard', path: '/', icon: <FaHome /> },
     { label: 'Người dùng', path: '/users', icon: <FaUsers /> },
-    { label: 'Quản lý tour', path: '/tours', icon: <MdModeOfTravel />},
+    { label: 'Quản lý tour', path: '/tours', icon: <MdModeOfTravel /> },
+    { label: 'Đơn các tour', path: '/tours-booked', icon: <BsCartCheckFill /> },
     { label: 'Vouchers', path: '/vouchers', icon: <FaTicketAlt /> },
     { label: 'Cài đặt', path: '/settings', icon: <FaCog /> },
 ]

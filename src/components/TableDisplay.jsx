@@ -17,18 +17,9 @@ const TableDisplay = ({ title, data, columns, exportExcel }) => {
     }, [columns, currentPage])
 
     // Sử dụng toàn bộ `data` cho useTable
-    const tableInstance = useTable(
-        { columns: columnsWithIndex, data },
-        useSortBy
-    )
+    const tableInstance = useTable({ columns: columnsWithIndex, data }, useSortBy)
 
-    const {
-        getTableProps,
-        getTableBodyProps,
-        headerGroups,
-        rows,
-        prepareRow,
-    } = tableInstance
+    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = tableInstance
 
     const pageCount = Math.ceil(rows.length / PAGE_SIZE)
     const paginatedRows = useMemo(() => {

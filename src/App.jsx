@@ -3,6 +3,7 @@ import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import Users from './pages/Users'
 import Tours from './pages/Tours'
+import BookedManager from './pages/ToursBooked'
 import Vouchers from './pages/Vouchers'
 import Settings from './pages/Settings'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -37,6 +38,7 @@ function App() {
                     <Route path="settings" element={<Settings />} />
                     <Route path="vouchers" element={<Vouchers />} />
                     <Route path="Tours" element={<Tours />} />
+                    <Route path="/tours-booked" element={<BookedManager />} />
                 </Route>
             </Routes>
         </Router>
