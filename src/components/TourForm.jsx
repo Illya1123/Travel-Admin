@@ -154,23 +154,26 @@ const TourForm = ({ onSubmit, initialValues, editingTourId, onCancel }) => {
                         ))}
                     </div>
                 </div>
-                <input
-                    type="text"
-                    name="price"
-                    value={formatCurrency(formik.values.price)}
-                    onChange={(e) => {
-                        const raw = unformatCurrency(e.target.value)
-                        const numeric = parseInt(raw || '0', 10)
-                        formik.setFieldValue('price', isNaN(numeric) ? 0 : numeric)
-                    }}
-                    onBlur={(e) => {
-                        // Khi blur thì reformat lại
-                        const raw = unformatCurrency(e.target.value)
-                        const numeric = parseInt(raw || '0', 10)
-                        formik.setFieldValue('price', isNaN(numeric) ? 0 : numeric)
-                    }}
-                    className="w-full border rounded p-2"
-                />
+                <div>
+                    <label className="block font-medium">Giá</label>
+                    <input
+                        type="text"
+                        name="price"
+                        value={formatCurrency(formik.values.price)}
+                        onChange={(e) => {
+                            const raw = unformatCurrency(e.target.value)
+                            const numeric = parseInt(raw || '0', 10)
+                            formik.setFieldValue('price', isNaN(numeric) ? 0 : numeric)
+                        }}
+                        onBlur={(e) => {
+                            // Khi blur thì reformat lại
+                            const raw = unformatCurrency(e.target.value)
+                            const numeric = parseInt(raw || '0', 10)
+                            formik.setFieldValue('price', isNaN(numeric) ? 0 : numeric)
+                        }}
+                        className="w-full border rounded p-2"
+                    />
+                </div>
                 {/* Loại tour */}
                 <div>
                     <label className="block font-medium">Loại tour</label>

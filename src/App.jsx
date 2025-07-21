@@ -24,7 +24,6 @@ function App() {
                         </PublicRoute>
                     }
                 />
-
                 {/* Protected layout with nested routes */}
                 <Route
                     path="/"
@@ -41,7 +40,7 @@ function App() {
                     <Route path="Tours" element={<Tours />} />
                     <Route path="/tours-booked" element={<BookedManager />} />
                 </Route>
-                <Route path="*" element={<NotFoundPage />} />
+                <Route path="/*" element={<NotFoundPage />} />
             </Routes>
         </Router>
     )
