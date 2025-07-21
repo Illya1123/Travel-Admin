@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import Users from './pages/Users'
+import Vouchers from './pages/Vouchers'
 import Settings from './pages/Settings'
 import ProtectedRoute from './components/ProtectedRoute'
 import PublicRoute from './components/PublicRoute'
@@ -33,6 +34,7 @@ function App() {
                     <Route index element={<Dashboard />} />
                     <Route path="users" element={<Users />} />
                     <Route path="settings" element={<Settings />} />
+                    <Route path="vouchers" element={<Vouchers />} />
                 </Route>
             </Routes>
         </Router>
