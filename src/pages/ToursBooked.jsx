@@ -9,6 +9,8 @@ import { saveAs } from 'file-saver'
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import dayjs from 'dayjs'
+import 'dayjs/locale/vi'
+dayjs.locale('vi')
 
 const BookedManager = () => {
     const [orders, setOrders] = useState([])
@@ -239,7 +241,7 @@ const BookedManager = () => {
                     <option value="Đã thanh toán">Đã thanh toán</option>
                     <option value="Đã hủy">Đã hủy</option>
                 </select>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="vi">
                     <DatePicker
                         value={filters.date}
                         format="DD/MM/YYYY"
