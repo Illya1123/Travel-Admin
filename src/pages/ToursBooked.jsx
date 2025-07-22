@@ -6,6 +6,9 @@ import moment from 'moment'
 import Swal from 'sweetalert2'
 import * as XLSX from 'xlsx'
 import { saveAs } from 'file-saver'
+import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import dayjs from 'dayjs'
 
 const BookedManager = () => {
     const [orders, setOrders] = useState([])
@@ -13,6 +16,7 @@ const BookedManager = () => {
     const [filters, setFilters] = useState({
         search: '',
         status: '',
+        date: null,
     })
 
     useEffect(() => {
@@ -43,13 +47,12 @@ const BookedManager = () => {
         const { value: newStatus } = await Swal.fire({
             title: 'Cập nhật trạng thái',
             html: `
-            <select id="swal-select" 
-                class="swal2-input !w-fit !max-w-[200px] !px-2 !py-1 !rounded-md !border !border-gray-300 text-sm">
-                <option value="Đã đặt" ${currentStatus === 'Đã đặt' ? 'selected' : ''}>Đã đặt</option>
-                <option value="Đã thanh toán" ${currentStatus === 'Đã thanh toán' ? 'selected' : ''}>Đã thanh toán</option>
-                <option value="Đã hủy" ${currentStatus === 'Đã hủy' ? 'selected' : ''}>Đã hủy</option>
-            </select>
-        `,
+                <select id="swal-select" class="swal2-input !w-fit !max-w-[200px] !px-2 !py-1 !rounded-md !border !border-gray-300 text-sm">
+                    <option value="Đã đặt" ${currentStatus === 'Đã đặt' ? 'selected' : ''}>Đã đặt</option>
+                    <option value="Đã thanh toán" ${currentStatus === 'Đã thanh toán' ? 'selected' : ''}>Đã thanh toán</option>
+                    <option value="Đã hủy" ${currentStatus === 'Đã hủy' ? 'selected' : ''}>Đã hủy</option>
+                </select>
+            `,
             focusConfirm: false,
             preConfirm: () => {
                 const selectEl = document.getElementById('swal-select')
@@ -85,7 +88,11 @@ const BookedManager = () => {
 
             const matchesStatus = filters.status ? order.status === filters.status : true
 
-            return matchesSearch && matchesStatus
+            const matchesDate = filters.date
+                ? dayjs(order.createdAt).format('YYYY-MM-DD') === filters.date.format('YYYY-MM-DD')
+                : true
+
+            return matchesSearch && matchesStatus && matchesDate
         })
     }, [orders, filters])
 
@@ -100,6 +107,14 @@ const BookedManager = () => {
         {
             Header: 'Ngày khởi hành',
             accessor: (row) => moment(row.tour[0]?.date).format('DD/MM/YYYY') || 'Không rõ',
+        },
+        {
+            Header: 'Số điện thoại',
+            accessor: 'pickupPhone',
+        },
+        {
+            Header: 'Địa điểm đón',
+            accessor: 'pickupAddress',
         },
         {
             Header: 'Người lớn',
@@ -158,7 +173,6 @@ const BookedManager = () => {
                 )
             },
         },
-
         {
             Header: 'Ngày đặt',
             accessor: 'createdAt',
@@ -174,6 +188,8 @@ const BookedManager = () => {
             Email: order.userId?.email,
             'Tên tour': order.tour?.[0]?.tourId?.title,
             'Ngày khởi hành': moment(order.tour?.[0]?.date).format('DD/MM/YYYY'),
+            'Số điện thoại': order.pickupPhone,
+            'Địa điểm đón': order.pickupAddress,
             'Người lớn': order.tour?.[0]?.numberOfAdults,
             'Trẻ em': order.tour?.[0]?.numberOfChildren,
             'Giá gốc': order.originalPrice,
@@ -205,13 +221,13 @@ const BookedManager = () => {
 
     return (
         <div className="p-6">
-            <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-4">
+            <div className="flex flex-col sm:flex-row sm:items-center flex-wrap gap-4 mb-4">
                 <input
                     type="text"
                     placeholder="Tìm kiếm đơn hàng, tên tour, email, voucher..."
                     value={filters.search}
                     onChange={handleSearchChange}
-                    className="px-4 py-2 border rounded-md w-full sm:w-1/2"
+                    className="px-4 py-2 border rounded-md w-full sm:w-[300px]"
                 />
                 <select
                     value={filters.status}
@@ -223,6 +239,29 @@ const BookedManager = () => {
                     <option value="Đã thanh toán">Đã thanh toán</option>
                     <option value="Đã hủy">Đã hủy</option>
                 </select>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                        value={filters.date}
+                        format="DD/MM/YYYY"
+                        onChange={(date) => setFilters({ ...filters, date })}
+                        slotProps={{
+                            textField: {
+                                size: 'small',
+                                className:
+                                    'bg-white border border-gray-300 rounded-md px-2 !min-w-[180px]',
+                            },
+                        }}
+                    />
+                </LocalizationProvider>
+
+                {filters.date && (
+                    <button
+                        onClick={() => setFilters({ ...filters, date: null })}
+                        className="text-sm text-red-500 hover:underline"
+                    >
+                        Xoá lọc ngày
+                    </button>
+                )}
             </div>
 
             <TableDisplay
