@@ -9,6 +9,14 @@ const Tours = () => {
     const [tours, setTours] = useState([])
     const [showForm, setShowForm] = useState(false)
     const [editingTour, setEditingTour] = useState(null)
+    const [searchKeyword, setSearchKeyword] = useState('')
+
+    const filteredTours = useMemo(() => {
+        if (!searchKeyword.trim()) return tours
+        return tours.filter((tour) =>
+            (tour.title + tour.country).toLowerCase().includes(searchKeyword.toLowerCase())
+        )
+    }, [searchKeyword, tours])
 
     const fetchTours = async () => {
         const data = await getAllTours()
@@ -118,7 +126,13 @@ const Tours = () => {
     return (
         <div className="p-6">
             <div className="flex justify-between items-center mb-4">
-                <h1 className="text-2xl font-bold text-blue-600">Danh sách Tour</h1>
+                <input
+                    type="text"
+                    placeholder="Tìm kiếm theo tiêu đề hoặc quốc gia..."
+                    value={searchKeyword}
+                    onChange={(e) => setSearchKeyword(e.target.value)}
+                    className="border px-4 py-2 rounded w-72 shadow-sm focus:outline-none focus:ring focus:ring-blue-300 mr-4"
+                />
                 <button
                     onClick={() => {
                         setShowForm(true)
@@ -130,7 +144,7 @@ const Tours = () => {
                 </button>
             </div>
 
-            <TableDisplay title="Danh sách tour" data={tours} columns={columns} />
+            <TableDisplay title="Danh sách tour" data={filteredTours} columns={columns} />
 
             <Modal isOpen={showForm} onClose={() => setShowForm(false)}>
                 <TourForm
