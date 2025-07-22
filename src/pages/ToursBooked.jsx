@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import TableDisplay from '../components/TableDisplay'
+import Loading from '../components/Loading'
 import { getAllOrder, updateOrderStatus } from '../api/tour_booked'
 import moment from 'moment'
 import Swal from 'sweetalert2'
@@ -8,6 +9,7 @@ import { saveAs } from 'file-saver'
 
 const BookedManager = () => {
     const [orders, setOrders] = useState([])
+    const [loading, setLoading] = useState(true)
     const [filters, setFilters] = useState({
         search: '',
         status: '',
@@ -16,10 +18,13 @@ const BookedManager = () => {
     useEffect(() => {
         const fetchOrders = async () => {
             try {
+                setLoading(true)
                 const data = await getAllOrder()
                 setOrders(data || [])
             } catch (err) {
                 console.error('Lỗi khi load danh sách đặt tour:', err)
+            } finally {
+                setLoading(false)
             }
         }
 
@@ -195,6 +200,8 @@ const BookedManager = () => {
 
         saveAs(blob, `don_dat_tour_${moment().format('YYYYMMDD_HHmmss')}.xlsx`)
     }
+
+    if (loading) return <Loading />
 
     return (
         <div className="p-6">

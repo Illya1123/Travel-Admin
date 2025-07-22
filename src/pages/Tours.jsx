@@ -4,12 +4,14 @@ import { createTour, getAllTours, deleteTourById, updateTourById } from '../api/
 import TableDisplay from '../components/TableDisplay'
 import TourForm from '../components/TourForm'
 import Modal from '../components/Modal'
+import Loading from '../components/Loading'
 
 const Tours = () => {
     const [tours, setTours] = useState([])
     const [showForm, setShowForm] = useState(false)
     const [editingTour, setEditingTour] = useState(null)
     const [searchKeyword, setSearchKeyword] = useState('')
+    const [loading, setLoading] = useState(true)
 
     const filteredTours = useMemo(() => {
         if (!searchKeyword.trim()) return tours
@@ -19,8 +21,15 @@ const Tours = () => {
     }, [searchKeyword, tours])
 
     const fetchTours = async () => {
-        const data = await getAllTours()
-        setTours(data)
+        try {
+            setLoading(true)
+            const data = await getAllTours()
+            setTours(data)
+        } catch (err) {
+            console.error('Lỗi khi tải tour:', err)
+        } finally {
+            setLoading(false)
+        }
     }
 
     const handleCreate = async (values, resetForm) => {
@@ -123,6 +132,7 @@ const Tours = () => {
         fetchTours()
     }, [])
 
+    if (loading) return <Loading />
     return (
         <div className="p-6">
             <div className="flex justify-between items-center mb-4">

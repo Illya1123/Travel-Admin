@@ -11,18 +11,23 @@ import {
 } from '../api/voucher'
 import VoucherForm from '../components/VoucherForm'
 import TableDisplay from '../components/TableDisplay'
+import Loading from '../components/Loading'
 
 const Voucher = () => {
     const [vouchers, setVouchers] = useState([])
     const [editingVoucherId, setEditingVoucherId] = useState(null)
     const [initialFormValues, setInitialFormValues] = useState(null)
+    const [loading, setLoading] = useState(true)
 
     const fetchVouchers = async () => {
         try {
+            setLoading(true)
             const res = await getAllVoucher()
             setVouchers(res || [])
         } catch (error) {
             console.error('Lỗi lấy danh sách voucher:', error)
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -174,6 +179,8 @@ const Voucher = () => {
         ],
         [vouchers]
     )
+
+    if(loading) return <Loading />
 
     return (
         <div className="flex flex-col lg:flex-row gap-8 p-6">
