@@ -165,6 +165,7 @@ const Dashboard = () => {
                         <DateCalendar
                             value={selectedDate}
                             onChange={(newValue) => setSelectedDate(newValue)}
+                            maxDate={dayjs()}
                         />
                     </LocalizationProvider>
                 </div>

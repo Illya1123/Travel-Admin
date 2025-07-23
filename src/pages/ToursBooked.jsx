@@ -246,6 +246,7 @@ const BookedManager = () => {
                         value={filters.date}
                         format="DD/MM/YYYY"
                         onChange={(date) => setFilters({ ...filters, date })}
+                        maxDate={dayjs()}
                         slotProps={{
                             textField: {
                                 size: 'small',
