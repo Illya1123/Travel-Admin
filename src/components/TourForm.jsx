@@ -45,7 +45,12 @@ const TourForm = ({ onSubmit, initialValues, editingTourId, onCancel }) => {
 
     const handleAddService = () => {
         if (newService.trim()) {
-            setServices([...services, newService.trim()])
+            const lines = newService
+                .split('\n')
+                .map((line) => line.trim())
+                .filter((line) => line !== '')
+
+            setServices((prev) => [...prev, ...lines])
             setNewService('')
         }
     }
@@ -75,6 +80,7 @@ const TourForm = ({ onSubmit, initialValues, editingTourId, onCancel }) => {
         'Mỹ',
         'Anh',
         'Úc',
+        'Singapore',
     ]
 
     const countryOptions = useMemo(() => {
@@ -215,12 +221,11 @@ const TourForm = ({ onSubmit, initialValues, editingTourId, onCancel }) => {
                 <div>
                     <label className="block font-medium">Dịch vụ</label>
                     <div className="flex gap-2">
-                        <input
-                            type="text"
+                        <textarea
                             value={newService}
                             onChange={(e) => setNewService(e.target.value)}
-                            className="border p-2 rounded w-full"
-                            placeholder="Nhập dịch vụ"
+                            className="border p-2 rounded w-full resize-none"
+                            placeholder="Nhập dịch vụ, mỗi dòng một dịch vụ"
                         />
                         <button
                             type="button"
